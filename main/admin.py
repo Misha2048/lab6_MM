@@ -1,6 +1,16 @@
 from django.contrib import admin
 from .models import *
 
+# from django.contrib.admin.models import LogEntry
+
+from django.contrib.auth.models import User, Group as UserGroup
+# from django.contrib.auth.models import Group
+
+admin.site.unregister(User)
+admin.site.unregister(UserGroup)
+
+# LogEntry.objects.all().delete()
+
 class GroupAdmin(admin.ModelAdmin):
     list_display = (
         'name', 
@@ -22,10 +32,18 @@ class StudentAdmin(admin.ModelAdmin):
     list_filter = (
         'group',
         'department',
+        'status',
+        'get_grants',
     )
     ordering = (
         'average',
         'name',
+    )
+    readonly_fields = (
+	    'average',
+	    'department',
+	    'status',
+	    'get_grants',
     )
 
 class SubjectAdmin(admin.ModelAdmin):
@@ -54,3 +72,5 @@ admin.site.register(Group, GroupAdmin)
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Subject, SubjectAdmin)
 admin.site.register(Mark, MarkAdmin)
+# admin.site.register(StudentStatus)
+# admin.site.register(StudentGetGrants)
