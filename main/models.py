@@ -1,4 +1,5 @@
 from django.db import models
+from math import ceil
 
 class Department(models.Model):
     name = models.CharField(max_length=500)
@@ -20,9 +21,11 @@ class Group(models.Model):
         return f"{self.name}"
 
 class Student(models.Model):
+    class Meta:
+        ordering = ('-average', 'name')
     name = models.CharField(max_length=500)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, blank=True, null=True)
     status = models.CharField(max_length=200, blank=True, null=True)
     average = models.FloatField(default=0)
     get_grants = models.CharField(max_length=3, default="No")
@@ -46,10 +49,13 @@ class Student(models.Model):
             return "expelled"
 
         if item == "get_grants":
-            students = Student.objects.filter(group=self.group).order_by("average")
-            if self in students[:round(students.count()*4/10)]:
+            students = Student.objects.filter(group=self.group)
+            if self in students[:ceil(len(students)*4/10)]:
                 return "Yes"
-            return "No"            
+            return "No"
+
+        if item == "department":
+            return self.group.department
 
         return object.__getattribute__(self, item)
 
