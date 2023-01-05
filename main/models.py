@@ -1,5 +1,6 @@
 from django.db import models
 from math import ceil
+from random import randint
 
 class StudentStatus(models.Model):
     value = models.CharField(max_length=20)
@@ -15,8 +16,8 @@ class StudentStatus(models.Model):
 class StudentGetGrants(models.Model):
     value = models.CharField(max_length=3)
 
-    # def __str__(self):
-        # return f"{self.value}"
+    def __str__(self):
+        return f"{self.value}"
 
     @classmethod
     def get_default_getgrants(cls):
@@ -96,7 +97,7 @@ class Subject(models.Model):
 class Mark(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    value = models.PositiveIntegerField()
+    value = models.PositiveIntegerField(default=randint(50, 100))
 
     def __str__(self):
         return f"{self.value}"

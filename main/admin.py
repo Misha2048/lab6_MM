@@ -33,7 +33,7 @@ class StudentAdmin(admin.ModelAdmin):
         'group',
         'department',
         'status',
-        'get_grants',
+        # 'get_grants',
     )
     ordering = (
         'average',
