@@ -58,7 +58,7 @@ class Student(models.Model):
 
     @staticmethod
     def update_all_instances():
-        students = Student.objects.all()
+        students = Student.objects.all().order_by("-average", "name")
         for student in students:
             student.department = student.group.department 
 
@@ -78,9 +78,9 @@ class Student(models.Model):
                 student.status = StudentStatus.objects.get(value="expelled")
             student.save()
 
-        students = Student.objects.filter(group=student.group)
         for student in students:
-            if student in students[:ceil(students.count()*4/10)]:
+            student_group = Student.objects.filter(group=student.group)
+            if student in student_group[:ceil(student_group.count()*4/10)]:
                 student.get_grants = StudentGetGrants.objects.get(value="Yes")
             else:
                 student.get_grants = StudentGetGrants.objects.get(value="No")
