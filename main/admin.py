@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import *
+from math import ceil
 
 # from django.contrib.admin.models import LogEntry
 
@@ -10,6 +11,10 @@ admin.site.unregister(User)
 admin.site.unregister(UserGroup)
 
 # LogEntry.objects.all().delete()
+
+# if self in students[:ceil(len(students)*4/10)]:
+#     return StudentGetGrants.objects.get(value="Yes")
+# return StudentGetGrants.objects.get(value="No")
 
 class GroupAdmin(admin.ModelAdmin):
     list_display = (
@@ -33,7 +38,7 @@ class StudentAdmin(admin.ModelAdmin):
         'group',
         'department',
         'status',
-        # 'get_grants',
+        'get_grants',
     )
     ordering = (
         'average',
@@ -72,5 +77,5 @@ admin.site.register(Group, GroupAdmin)
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Subject, SubjectAdmin)
 admin.site.register(Mark, MarkAdmin)
-# admin.site.register(StudentStatus)
-# admin.site.register(StudentGetGrants)
+admin.site.register(StudentStatus)
+admin.site.register(StudentGetGrants)
