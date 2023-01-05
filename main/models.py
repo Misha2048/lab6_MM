@@ -53,41 +53,6 @@ class Student(models.Model):
     average = models.FloatField(default=0)
     get_grants = models.ForeignKey(StudentGetGrants, on_delete=models.CASCADE, default=StudentGetGrants.get_default_getgrants)
 
-    # def __getattribute__(self, item):
-    #     if item == "average":
-    #         marks = Mark.objects.filter(student__name=self.name)
-    #         mark_count = marks.count()
-    #         if mark_count:
-    #             return marks.aggregate(models.Sum("value"))['value__sum']/mark_count
-    #         return 0
-
-    #     if item == "status":
-    #         average = self.average
-    #         if average >= 90 and average <= 100:
-    #             return StudentStatus.objects.get(value="excellent")
-    #         elif average >= 75 and average < 90:
-    #             return StudentStatus.objects.get(value="good")
-    #         elif average >= 60 and average < 75:
-    #             return StudentStatus.objects.get(value="satisfactory")
-    #         return StudentStatus.objects.get(value="")
-
-    #     if item == "get_grants":
-    #         students = Student.objects.filter(group=self.group)
-    #         if self in students[:ceil(len(students)*4/10)]:
-    #             yes = StudentGetGrants.objects.get(value="Yes")
-    #             self.get_grants = yes
-    #             self.save()
-    #             return yes
-    #         no = get_grants=StudentGetGrants.objects.get(value="No")
-    #         self.get_grants = no
-    #         self.save()
-    #         return no
-
-    #     if item == "department":
-    #         return self.group.department
-
-    #     return object.__getattribute__(self, item)
-
     def __str__(self):
         return f"{self.name}"
 
